@@ -1,6 +1,14 @@
 import { Utils } from '../app/Utils';
 
 describe('Utils test suit', () => {
+    beforeEach(() => {
+        console.log('before each');
+    });
+
+    beforeAll(() => {
+        console.log('before all');
+    });
+
     test('First test', () => {
         const result = Utils.toUpperCase('something');
         expect(result).toBe('SOMETHING')
@@ -22,4 +30,6 @@ describe('Utils test suit', () => {
         }
         expect(parsedUrl.query).toEqual(query);
     });
+
+    test.todo('test invalid url');
 });

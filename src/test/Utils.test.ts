@@ -31,5 +31,22 @@ describe('Utils test suit', () => {
         expect(parsedUrl.query).toEqual(query);
     });
 
-    test.todo('test invalid url');
+    test('Test invalid url', () => {
+        function expectError() {
+            Utils.parseUrl('')
+        }
+        expect(expectError).toThrow('Empty url');
+    });
+    test('Test invalid url with arrow function', () => {
+        expect(() => Utils.parseUrl('')).toThrow('Empty url');
+    });
+
+    test('Test invalid url with try catch', () => {
+        try {
+            Utils.parseUrl('');
+        } catch (error) {
+            expect(error).toBeInstanceOf(Error);
+            expect(error).toHaveProperty('message', 'Empty url');
+        }
+    });
 });

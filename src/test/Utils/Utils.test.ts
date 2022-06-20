@@ -1,15 +1,36 @@
-import { Utils } from '../app/Utils/Utils'
+import { IncomingMessage } from 'http';
+import { Utils } from '../../app/Utils/Utils'
 
 
 describe('Utils test suite', () => {
 
-    beforeEach(() => {
-        console.log('before each');
-    })
 
-    beforeAll(() => {
-        console.log('before all');
-    })
+    test('getRequestPath valid request', () => {
+        const request = {
+            url: 'http://localhost:8080/login'
+        } as IncomingMessage;
+        const resultPath = Utils.getRequestBasePath(request);
+
+        expect(resultPath).toBe('login')
+    });
+
+    test('getRequestPath with no path name', () => {
+        const request = {
+            url: 'http://localhost:8080/'
+        } as IncomingMessage;
+        const resultPath = Utils.getRequestBasePath(request);
+
+        expect(resultPath).toBeFalsy()
+    });
+
+    test('getRequestPath with no path name', () => {
+        const request = {
+            url: ''
+        } as IncomingMessage;
+        const resultPath = Utils.getRequestBasePath(request);
+
+        expect(resultPath).toBeFalsy()
+    });
 
     test('parse simple URL', () => {
         const parsedUrl = Utils.parseUrl('http://localhost:8080/login');
@@ -42,7 +63,7 @@ describe('Utils test suite', () => {
         }).toThrow('Empty url');
     });
 
-    test.only('test invalid URL with try catch', () => {
+    test('test invalid URL with try catch', () => {
         try {
             Utils.parseUrl('');
         } catch (error) {
@@ -50,5 +71,6 @@ describe('Utils test suite', () => {
             expect(error).toHaveProperty('message', 'Empty url!');
         }
     });
+
 
 });
